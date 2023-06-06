@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  color: black;
+}
+
+body {
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 8%;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar a {
+  font-size: 1.2rem;
+}
+
+.links {
+  margin: 0 5rem;
+}
+
+.links a {
+  margin: 0 1rem;
+}
+
+.signin-btn {
+  display: inline-block;
+  background: #fff;
+  color: #339dff;
+  border: 2px solid #339dff;
+  text-decoration: none;
+  border-radius: 50px;
+  width: 6rem;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.user-btn i,
+.notification-btn i {
+  font-size: 2rem;
+}
+
+/* order page  */
+
+.order-page {
+  background: #d2d0ce;
+  height: 100vh;
+  padding: 4rem 10% 0.5rem 8%;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  letter-spacing: -0.1rem;
+  font-size: 1.6rem;
+}
+
+.input-container {
+  position: relative;
+  width: 30%;
+}
+
+.input-container i {
+  position: absolute;
+  top: 50%;
+  right: 93%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.searchbar {
+  min-height: 3.5rem;
+  width: 100%;
+  border-bottom: 2px solid gray;
+  font-size: 1rem;
+  padding-left: 30px;
+  height: fit-content;
+}

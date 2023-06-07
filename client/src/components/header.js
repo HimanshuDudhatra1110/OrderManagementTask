@@ -1,3 +1,5 @@
+import * as ROUTES from "../constants/routes";
+
 export default function Header() {
   return (
     <header className="header">
@@ -16,7 +18,7 @@ export default function Header() {
           <a href="item6">Item6</a>
         </div>
 
-        <a href="#" type="button" className="signin-btn">
+        <a href={ROUTES.SIGNIN} type="button" className="signin-btn">
           Sign In
         </a>
 

@@ -5,22 +5,44 @@ import * as ROUTES from "../constants/routes";
 
 export default function OrderList() {
   const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [apparelTotal, setApparelTotal] = useState(0);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://631945908e51a64d2be10770.mockapi.io/api/v1/allOrders"
+      );
+      const data = response.data;
+
+      const apparelTotal = data.reduce((total, item) => {
+        return total + (item.countOfItemTypes.apparel || 0);
+      }, 0);
+      setApparelTotal(apparelTotal);
+
+      if (searchQuery) {
+        const filteredData = data.filter((item) =>
+          item.orderDescription
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
+        );
+        setFilteredData(filteredData);
+      } else {
+        setFilteredData(data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://631945908e51a64d2be10770.mockapi.io/api/v1/allOrders"
-        );
-        const data = response.data;
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
-  }, []);
+  }, [searchQuery, filteredData]);
+
+  const handleSearch = () => {
+    fetchData();
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -48,8 +70,10 @@ export default function OrderList() {
               name="search"
               className="searchbar"
               placeholder="Search By Order Description"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <i className="bx bx-search"></i>
+            <i className="bx bx-search" onClick={handleSearch}></i>
           </div>
         </div>
 
@@ -67,7 +91,7 @@ export default function OrderList() {
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
+              {filteredData.map((item) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.orderDescription}</td>
@@ -75,7 +99,11 @@ export default function OrderList() {
                     Apparel <span>{item.countOfItemTypes.apparel}</span> &emsp;
                     Grocery <span>{item.countOfItemTypes.grocery}</span>
                   </td>
-                  <td>%</td>
+                  <td>
+                    {((item.countOfItemTypes.apparel || 0) / apparelTotal) *
+                      100}
+                    %
+                  </td>
                   <td>{item.createdBy}</td>
                   <td>{item.createdAt}</td>
                   <td>
